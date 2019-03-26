@@ -104,3 +104,53 @@ plot_history([
     ('smaller', smaller_history),
     ('bigger', bigger_history)
 ])
+
+l2_model = keras.models.Sequential([
+    keras.layers.Dense(16, kernel_regularizer=keras.regularizers.l2(0.001),
+                       activation=tf.nn.relu, input_shape=(NUM_WORDS,)),
+    keras.layers.Dense(16, activity_regularizer=keras.regularizers.l2(0.001),
+                       activation=tf.nn.relu),
+    keras.layers.Dense(1, activation=tf.nn.sigmoid)
+])
+
+l2_model.compile(optimizer='adam',
+                 loss='binary_crossentropy',
+                 metrics=['accuracy', 'binary_crossentropy'])
+
+l2_model_history = l2_model.fit(train_data, train_labels,
+                                epochs=20,
+                                batch_size=512,
+                                validation_data=(test_data, test_labels),
+                                verbose=2)
+
+plot_history([('baseline', baseline_history),
+              ('l2', l2_model_history)])
+
+dpt_model = keras.models.Sequential([
+    keras.layers.Dense(16, activation=tf.nn.relu, input_shape=(NUM_WORDS,)),
+    keras.layers.Dropout(0.5),
+    keras.layers.Dense(16, activation=tf.nn.relu),
+    keras.layers.Dropout(0.5),
+    keras.layers.Dense(1, activation=tf.nn.sigmoid)
+])
+
+dpt_model.compile(optimizer='adam',
+                  loss='binary_crossentropy',
+                  metrics=['accuracy', 'binary_crossentropy'])
+
+dpt_model_history = dpt_model.fit(train_data, train_labels,
+                                  epochs=20,
+                                  batch_size=512,
+                                  validation_data=(test_data, test_labels),
+                                  verbose=2)
+
+plot_history([('baseline', baseline_history),
+              ('dropout', dpt_model_history)])
+
+# 防止神经网络出现过拟合的最常见方法:
+#  * 获取更多训练数据
+#  * 降低网络容量
+#  * 添加权重正则化
+#  * 添加丢弃层
+#  * 数据增强 ?
+#  * 批次归一化 ?

@@ -5,4 +5,7 @@
     3. [Text classification](basic_text_classification.py)
     4. [Regression](basic_regression.py)
     5. [Overfitting and underfitting](overfit_and_underfit.py)
- 2. Research and experimentation
+    6. [Save and restore models](save_and_restore_models.py)
+2. Research and experimentation
+    1. Overview
+    2. [Eager execution](eager_basics.py) 
