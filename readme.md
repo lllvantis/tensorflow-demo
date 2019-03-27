@@ -8,4 +8,6 @@
     6. [Save and restore models](save_and_restore_models.py)
 2. Research and experimentation
     1. Overview
-    2. [Eager execution](eager_basics.py) 
+    2. [Eager execution](eager_basics.py)
+    3. [Automatic differentiation](automatic_differentiation.py)
+    4. [Custom training:basics](custom_training.py)

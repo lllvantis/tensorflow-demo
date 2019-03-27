@@ -63,3 +63,29 @@ if tf.test.is_gpu_available():
         x = tf.random_uniform([1000, 1000])
         assert x.device.endswith("GPU:0")
         time_matmul(x)
+
+ds_tensors = tf.data.Dataset.from_tensor_slices([1, 2, 3, 4, 5, 6])
+
+# Create a CSV file
+import tempfile
+_, filename = tempfile.mkstemp()
+
+with open(filename, 'w') as f:
+    f.write("""Line 1
+Line2
+Line3
+""")
+
+    ds_file = tf.data.TextLineDataset(filename)
+
+ds_tensors = ds_tensors.map(tf.square).shuffle(2).batch(2)
+
+ds_file = ds_file.batch(2)
+
+print("Elements of ds_tensors:")
+for x in ds_tensors:
+    print(x)
+
+print("\nElements in ds_file:")
+for x in ds_file:
+    print(x)

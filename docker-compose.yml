@@ -1,0 +1,6 @@
+version: "3.6"
+services:
+  tensorflow-demo:
+    build: .
+    ports:
+      - "8901:8901"
